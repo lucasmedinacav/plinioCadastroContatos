@@ -1,0 +1,5 @@
+{
+    "eslint.enable": false,
+    "tslint.enable": false,
+    "html.format.wrapAttributes": "force"
+}

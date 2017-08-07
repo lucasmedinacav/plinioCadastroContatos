@@ -1,0 +1,53 @@
+<div style="margin-top:10px" class="col-xs-12">
+    <select class="btn btn-info dropdown-toggle col-xs-9" style="height:45px;text-align:center;font-size:18px;display:block">
+    <option disabled>Selecione uma de suas listas</option>
+    <option *ngFor="let lista of listas" [value]="hero">
+      {{lista .nome}}
+    </option>
+  </select>
+</div>
+<div class="row">
+    <div class="col-xs-2">
+        <div *ngFor="let produto of lista.produtos" class="thumbnail" style="">
+            <div [ngClass]="getClassSeJaPegou(produto.jaPegou)">
+                <span style="text-align: center; font-family: serif;" class="caption">
+                    {{ produto.nome }}
+                </span>
+                <span (click)="removerProdutoDaLista(produto)" class="glyphicon glyphicon-remove" style="margin:5px; text-align: right"></span>
+            </div>
+
+            <div [ngClass]="getClassSeJaPegou(produto.jaPegou)" style="text-align:center">
+                <img [src]="produto.imagem" style="width:152px; height:152px;" [alt]="produto.nome">
+            </div>
+            <div style="font-family: serif;" [ngClass]="getClassSeJaPegou(produto.jaPegou)">
+                Valor Unitario : {{ produto.valor }}
+            </div>
+            <div style="font-family: serif;" [ngClass]="getClassSeJaPegou(produto.jaPegou)">
+                Valor Total : {{ produto.quantidade * produto.valor }}
+            </div>
+
+            <div style="font-family: serif;padding: 0;">
+                <div [ngClass]="getClassSeJaPegou(produto.jaPegou)" style="text-align:left;display:inline-block">
+                    <a class="disabled: true" (click)="lista.diminuirQuantidade(produto)"><span class="glyphicon glyphicon-minus" style="margin:5px"></span></a>
+                    <input type="number" [(ngModel)]="produto.quantidade" readonly="true" style="width: 40px;" min="0" class="form-group" />
+                    <a (click)="lista.aumentarQuantidade(produto)"><span class="glyphicon glyphicon-plus" style="margin:5px"></span></a>
+                </div>
+                <div style="padding: 0;text-align: right;display:inline-block">
+                    <button *ngIf="!produto.jaPegou" (click)="lista.pegarProduto(produto)"> OK</button>
+                    <button *ngIf="produto.jaPegou" (click)="lista.devolverProduto(produto)"> X</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section style="position: fixed; bottom: 0px; margin: 3px;background: #515151; color:white; margin-left: -44px; font-size:16px; width:100%;height:50px; padding: 15px;" class="col-xs-12; ">
+    <div class="col-md-4" style="text-align:left">
+        Qtd Restante de Itens a pegar:
+    </div>
+    <div class="col-md-4" style="text-align:left">
+        Valor Estimado: {{ lista.estimado | currency : 'BRL' : true }}
+    </div>
+    <div class="col-md-4" style="text-align:left">
+        Valor Total: {{ lista.total | currency : 'BRL' : true }}
+    </div>
+</section>
